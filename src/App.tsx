@@ -33,11 +33,16 @@ function App() {
     //     { id: 3, title: "Yo", isDone: false },
     //     { id: 4, title: "Yo", isDone: true }
     // ]
-
+const removeTask = (id: number) => {
+    setTasks(tasks.filter(t => {
+        return t.id != id;
+    }))
+}
 
     return (
         <div className="App">
-            <Todolist header={header} tasks={tasks}/>
+            <Todolist header={header}
+                      tasks={tasks} removeTask={removeTask}/>
         </div>
     );
 }
