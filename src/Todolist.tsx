@@ -1,8 +1,9 @@
 import React from "react";
 
 type TodolistPropsType = {
-    shapka: string
+    header: string
     tasks: Array<TypeTasks>
+    removeTask: (id: number) => void
 }
 
 type TypeTasks = {
@@ -14,7 +15,7 @@ type TypeTasks = {
 export const Todolist = (props: TodolistPropsType) => {
     return (
         <div>
-            <h3>{props.shapka}</h3>
+            <h3>{props.header}</h3>
             <div>
                 <input/>
                 <button>+</button>
@@ -22,7 +23,10 @@ export const Todolist = (props: TodolistPropsType) => {
             <ul>
                 {props.tasks.map((el) => {
                     return (
-                        <li><input type="checkbox" checked={el.isDone}/> <span>{el.title}</span></li>
+                        <li><input type="checkbox" checked={el.isDone}/> <span>{el.title}</span>
+                            <button onClick={ () => { props.removeTask(el.id) } }>x</button>
+                        </li>
+
                     )
                 })}
             </ul>
