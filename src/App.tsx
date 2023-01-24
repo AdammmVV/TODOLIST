@@ -8,12 +8,16 @@ export type FilterValuesType = "all" | "active" | "completed";
 function App() {
 
     let [tasks, setTasks] = useState([
-        { id: v1(), title: "HTML&CSS", isDone: true },
-        { id: v1(), title: "JS", isDone: true },
-        { id: v1(), title: "ReactJS", isDone: false },
-        { id: v1(), title: "Rest API", isDone: false },
-        { id: v1(), title: "GraphQL", isDone: false },
+        {id: v1(), title: "HTML&CSS", isDone: true},
+        {id: v1(), title: "JS", isDone: true},
+        {id: v1(), title: "ReactJS", isDone: false},
+        {id: v1(), title: "Rest API", isDone: false},
+        {id: v1(), title: "GraphQL", isDone: false},
     ]);
+
+    const changeStatus = (eventStatus: boolean, taskId: string) => {
+        setTasks(tasks.map(el => el.id === taskId ? {id: el.id, title: el.title, isDone: eventStatus} : el))
+    }
 
     function removeTask(id: string) {
         let filteredTasks = tasks.filter(t => t.id != id);
@@ -35,8 +39,8 @@ function App() {
         setFilter(value);
     }
 
-    const addPost = (value:string) => {
-        const newTask =  { id: v1(), title: value, isDone: false }
+    const addPost = (value: string) => {
+        const newTask = {id: v1(), title: value, isDone: false}
         setTasks([newTask, ...tasks])
     }
 
@@ -46,7 +50,9 @@ function App() {
                       tasks={tasksForTodolist}
                       removeTask={removeTask}
                       changeFilter={changeFilter}
-                      addPost={addPost}/>
+                      addPost={addPost}
+                      changeStatus={changeStatus}
+                      filter={filter}/>
         </div>
     );
 }
