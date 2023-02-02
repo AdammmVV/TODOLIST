@@ -39,7 +39,7 @@ export function Todolist(props: PropsType) {
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         setError(null);
-        if (e.charCode === 13) {
+        if (e.key === 'Enter') {
             addTask();
         }
     }
