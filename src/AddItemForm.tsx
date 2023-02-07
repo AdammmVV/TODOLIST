@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, RefObject, useRef, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 
 type AddItemFormPropsType = {
     addItem: (newValue: string) => void
@@ -7,18 +7,13 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
     let [title, setTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
 
-    let newValue: RefObject<HTMLInputElement> = useRef(null);
-
-
-    const addItem = () => {
-        if (newValue.current) {
-            let newTitle = newValue.current.value.trim();
-            if (newTitle !== "") {
-                props.addItem(newTitle);
-            } else {
-                setError("Title is required");
-            }
-            newValue.current.value = ''
+    const addTask = () => {
+        let newTitle = title.trim();
+        if (newTitle !== "") {
+            props.addItem(newTitle);
+            setTitle("");
+        } else {
+            setError("Title is required");
         }
     }
 
@@ -29,20 +24,18 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         setError(null);
         if (e.charCode === 13) {
-            addItem();
+            addTask();
         }
     }
 
     return (
         <div>
-            <input
-                // value={title}
-                ref={newValue}
-                // onChange={onChangeHandler}
-                onKeyPress={onKeyPressHandler}
-                className={error ? "error" : ""}
+            <input value={title}
+                   onChange={onChangeHandler}
+                   onKeyPress={onKeyPressHandler}
+                   className={error ? "error" : ""}
             />
-            <button onClick={addItem}>+</button>
+            <button onClick={addTask}>+</button>
             {error && <div className="error-message">{error}</div>}
         </div>
     )
