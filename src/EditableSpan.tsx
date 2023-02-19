@@ -24,6 +24,7 @@ export const EditableSpan: React.FC<EditableSpanPropsType> = (props) => {
     return (
         editMode
             ? <TextField
+                type={'text'}
                 variant={'standard'}
                 value={title}
                 onChange={onChangeHandler}
