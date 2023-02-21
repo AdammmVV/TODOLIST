@@ -13,12 +13,12 @@ import {
 let todolistId1 = v1();
 let todolistId2 = v1();
 
-const startTodoListState: TodolistType[] = [
+export const startTodoListState: TodolistType[] = [
     {id: todolistId1, title: "What to learn", filter: "all"},
     {id: todolistId2, title: "What to buy", filter: "all"}
 ]
 
-const startTasksState: TasksStateType = {
+export const startTasksState: TasksStateType = {
     [todolistId1]: [
         {id: v1(), title: "HTML&CSS", isDone: true},
         {id: v1(), title: "JS", isDone: false}
