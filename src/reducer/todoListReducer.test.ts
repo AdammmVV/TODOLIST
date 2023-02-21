@@ -1,0 +1,34 @@
+import {v1} from "uuid";
+import {FilterValuesType, TasksStateType, TodolistType} from "../App";
+import {changeFilterAC, todoListReducer} from "./todoListReducer";
+
+let todolistId1 = v1();
+let todolistId2 = v1();
+
+const startTodoListState: TodolistType[] = [
+    {id: todolistId1, title: "What to learn", filter: "all"},
+    {id: todolistId2, title: "What to buy", filter: "all"}
+]
+
+const startTasksState: TasksStateType = {
+    [todolistId1]: [
+        {id: v1(), title: "HTML&CSS", isDone: true},
+        {id: v1(), title: "JS", isDone: false}
+    ],
+    [todolistId2]: [
+        {id: v1(), title: "Milk", isDone: false},
+        {id: v1(), title: "React Book", isDone: true}
+    ]
+}
+
+test('correct filter of todolist should be change', () => {
+    let newFilter: FilterValuesType = "completed"
+    let todolistId = startTodoListState[1].id
+
+    const endTodoListState = todoListReducer(startTodoListState, changeFilterAC(newFilter, todolistId))
+
+    expect(endTodoListState).not.toBe(startTodoListState)
+    expect(endTodoListState[1].filter).toBe(newFilter)
+    expect(endTodoListState.length).toBe(2)
+})
+
