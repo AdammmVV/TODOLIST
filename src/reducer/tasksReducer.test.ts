@@ -1,6 +1,6 @@
 import {v1} from "uuid";
 import {TasksStateType, TodolistType} from "../App";
-import {addTaskAC, changeStatusTaskAC, removeTaskAC, tasksReducer} from "./tasksReducer";
+import {addTaskAC, changeStatusTaskAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./tasksReducer";
 
 let todolistId1 = v1();
 let todolistId2 = v1();
@@ -57,5 +57,17 @@ test('correct task should have its status changed', ()=> {
     expect(endTasksState).not.toBe(startTasksState)
     expect(endTasksState[todoListId][1].isDone).toBe(isDoneTask)
     expect(endTasksState[todoListId].length).toBe(2)
+})
+
+test('correct task should be change', ()=> {
+    let todoListId = startTodoListState[1].id
+    let taskId = startTasksState[todoListId][0].id
+    let taskTitle = 'Bear'
+
+    const endTaskState = tasksReducer(startTasksState, changeTaskTitleAC(taskId, taskTitle, todoListId))
+
+    expect(endTaskState).not.toBe(startTasksState)
+    expect(endTaskState[todoListId].length).toBe(2)
+    expect(endTaskState[todoListId][0].title).toBe('taskTitle')
 })
 
