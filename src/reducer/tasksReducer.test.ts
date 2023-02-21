@@ -1,6 +1,6 @@
 import {v1} from "uuid";
 import {TasksStateType, TodolistType} from "../App";
-import {addTaskAC, tasksReducer} from "./tasksReducer";
+import {addTaskAC, removeTaskAC, tasksReducer} from "./tasksReducer";
 
 let todolistId1 = v1();
 let todolistId2 = v1();
@@ -20,6 +20,19 @@ export const startTasksState: TasksStateType = {
         {id: v1(), title: "React Book", isDone: true}
     ]
 }
+
+test('correct task should be remove', () => {
+
+    let todoListId = startTodoListState[1].id
+    let taskId = startTasksState[todoListId][0].id
+
+    const endTasksState = tasksReducer(startTasksState, removeTaskAC(taskId, todoListId))
+
+    expect(endTasksState).not.toBe(startTasksState)
+    expect(endTasksState[todoListId].length).toBe(1)
+    expect(endTasksState[todoListId][0].title).toBe("React Book")
+
+})
 
 test('should add task correctly', ()=> {
 
